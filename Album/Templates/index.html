@@ -1,13 +1,70 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photoalbum</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Album Photo Site</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">
+	<link rel="stylesheet" href="/static/styles/navbar.css">
 </head>
+
 <body>
-    <h3>photo</h3>
+    <!-- nav/menu -->
+	<nav class="navbar">
+		<!-- <img class="logo" id="logo" src="{% static 'CBS-Logo.png' %}" alt="Continental Banking Site Logo"> -->
+		<input class="menu-btn" type="checkbox" id="menu-btn" />
+		<label class="menu-icon" for="menu-btn"><span class="nav-icon"></span></label>
+		<!-- Menu-->
+		<ul class="menu">
+			<li><a href="/">Home</a></li>
+			<li><a href="">About us</a></li>
+			<li><a href="">Contact</a></li>
+			<li><a href="">Help</a></li>
+			{% if user.is_authenticated %}
+          <li><a href="logout">Logout</a></li>
+          {% else %}
+          <li><a href="{% url 'login' %}">Login</a></li>
+          {% endif %}
+		</ul>
+	</nav>
+	<!-- end of nav/menu -->
+
+    <!-- home section starts here -->
+    <section class="home" id="home">
+        <div class="content">
+            <h1>Album <h2>Photo site</h2></h1>
+            <p>Making Banking Easier Across The African Continent. Check If You Qualify For A Loan, Find Out Which Bank Offers The Best Rates, And Determine How Much You Can Borrow – All Without Any Hassle Of Going Through Paperwork Or Waiting In Queues.</p>
+            <p>Get Everything Done From The Comfort Of Your Own Home. Before you get started, learn how it works by clicking the button below.</p>
+			<a href="" class="btn">Help</a>
+        </div>
+       <div class="form" id="form">
+			<div class="login_container">
+				<h1>Sign In</h1>
+				<form method="post" autocomplete="off">
+					{% csrf_token %}
+					{% if messages %}
+						{% for message in messages %}
+						<h2>{{message}}</h2>
+						{% endfor %}
+					{% endif %}
+					<input id="username" name="username" type="text" placeholder="Username">
+					<input id="password" name="password" type="password" placeholder="Password">
+					<button id="submit">Login</button>
+					<p><span>Don't have an account</span></p>
+					<center><a href="{% url 'user_register' %}">Sign Up</a></center>
+				</form>
+			</div>	
+        </div> 
+    </section>
+    <!-- home section ends here -->
+	<!-- footer -->
+	<footer>
+		<p>Kelvin kipkosgei | All rights reserved. 2024 -
+			<script>document.write(new Date().getFullYear());</script>
+		</p>
+	</footer>
 </body>
 </html>
