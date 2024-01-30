@@ -31,6 +31,7 @@ def login_request(request):
 
 def register(request):
     if request.method == 'POST':
+        name = request.POST['name']
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password1']
@@ -44,7 +45,7 @@ def register(request):
                 messages.info(request,'Username Already Exists')
                 return redirect('user_register')
             else:
-                user = User.objects.create_user(username=username,email=email,password=password)
+                user = User.objects.create_user(username=username,name=name,email=email,password=password)
                 user.save()
                 return redirect('login')
         else:
