@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Album Photo Site</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">
+	<link rel="stylesheet" href="/static/styles/navbar.css">
+</head>
+
+<body>
+    <!-- nav/menu -->
+	<nav class="navbar">
+		<!-- <img class="logo" id="logo" src="{% static 'CBS-Logo.png' %}" alt="Continental Banking Site Logo"> -->
+		<input class="menu-btn" type="checkbox" id="menu-btn" />
+		<label class="menu-icon" for="menu-btn"><span class="nav-icon"></span></label>
+		<!-- Menu-->
+		<ul class="menu">
+			<li><a href="/">Home</a></li>
+			<li><a href="">About us</a></li>
+			<li><a href="">Contact</a></li>
+			<li><a href="">Help</a></li>
+			{% if user.is_authenticated %}
+          <li><a href="logout">Logout</a></li>
+          {% else %}
+          <li><a href="{% url 'login' %}">Login</a></li>
+          {% endif %}
+		</ul>
+	</nav>
+	<!-- end of nav/menu -->
+
+    <!-- home section starts here -->
+    <section class="home" id="home">
+        <div class="content">
+            <h1>Album <h2>Photo site</h2></h1>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nesciunt quo eos fugit odio laborum delectus, placeat rem accusantium! Quis minima vero ducimus cumque, similique id excepturi obcaecati libero at consequuntur?</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam dolores necessitatibus delectus eveniet sequi odit!</p>
+			<a href="" class="btn">Help</a>
+        </div>
+       <div class="form" id="form">
+			<div class="login_container">
+				<h1>Sign In</h1>
+				<form method="post" autocomplete="off">
+					{% csrf_token %}
+					{% if messages %}
+						{% for message in messages %}
+						<h2>{{message}}</h2>
+						{% endfor %}
+					{% endif %}
+					<input id="username" name="username" type="text" placeholder="Username">
+					<input id="password" name="password" type="password" placeholder="Password">
+					<button id="submit">Login</button>
+					<p><span>Don't have an account</span></p>
+					<center><a href="{% url 'user_register' %}">Sign Up</a></center>
+				</form>
+			</div>	
+        </div> 
+    </section>
+    <!-- home section ends here -->
+	<!-- footer -->
+	<footer>
+		<p>Kelvin kipkosgei | All rights reserved. 2024 -
+			<script>document.write(new Date().getFullYear());</script>
+		</p>
+	</footer>
+</body>
+</html>
