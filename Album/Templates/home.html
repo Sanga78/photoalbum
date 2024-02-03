@@ -1,4 +1,42 @@
-<html>
-    {{ user.username }}
-    <h3>Welcome</h3>
-</html>
+{% extends "blog/base.html" %}
+{% block content %}
+  <h3>Users</h3>
+      {% for user in users %}
+          <p>{{ user.username }} - Albums: {{ user.album_set.count }}</p>
+      {% endfor %}
+
+  <h3>Albums</h3>
+    {% for album in albums %}
+        <article class="media content-section">
+          <img class="rounded-circle article-img" src="{{ album.user.profile.image.url }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="{%url 'user_detail' album.user.id%}">{{ album.user }}</a>
+              <small class="text-muted">{{ album.date_created|date:"F d, Y" }}</small>
+            </div>
+            {%if user == album.user %} 
+              <h2><a class="article-title" href="{% url 'album-detail' album.id %}">{{ album.album_title }}</a></h2>
+            {%else%}
+              <h2>{{ album.album_title }}</h2>
+            {%endif%}
+            
+          </div>
+        </article>
+    {% endfor %}
+
+    {%if is_paginated %}
+        {%if page_obj.has_previous%}
+          <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+          <a class="btn btn-outline-info mb-4" href="?page={{page_obj.previous_page_number}}">Previous</a>
+        {%endif%}
+      
+        {% if page_obj.has_next%}
+          <a class="btn btn-outline-info mb-4" href="?page={{page_obj.next_page_number}}">Next</a>
+          <a class="btn btn-outline-info mb-4" href="?page={{page_obj.paginator.num_pages}}">Last</a>
+        {%endif%}
+    {%endif%}
+
+
+          
+
+{% endblock content %}
