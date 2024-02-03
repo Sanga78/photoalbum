@@ -1,0 +1,40 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    <h1 class="mb-3">ALbums by {{view.kwargs.username} ({{page_obj.paginator.count}})}</h1>
+    <div class="article-metadata">
+        <a href="{%url 'user-albums' album.user_id.username%}"></a>
+    </div>
+    {% for album in albums %}
+        <article class="media content-section">
+          <img class="rounded-circle article-img" src="{{ album.user_id.profile.image.url }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ album.user_id }}</a>
+              <small class="text-muted">{{ album.date_created|date:"F d, Y" }}</small>
+            </div>
+            <h2><a class="article-title" href="{% url 'album-detail' album.id %}">{{ album.title }}</a></h2>
+          </div>
+        </article>
+    {% endfor %}
+    {%if is_paginated %}
+        {%if page_obj.has_previous%}
+          <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+          <a class="btn btn-outline-info mb-4" href="?page={{page_obj.previous_page_number}}">Previous</a>
+        {%endif%}
+        {%for num in page_obj.paginator.page_range%}
+          {%if page_obj_number == num %}
+            <a href="?={{num}}" class="btn btn-info mb-4 ">{{num}}</a>
+          {%elif num>page_obj.number|add:'-3' and num<page_obj_number|add:'-3%}
+            <a href="?page={{num}}" class="btn btn-outline-info">{{num}}</a>
+          {%endif%}
+        {%endfor%}
+        {% if page_obj.has_next%}
+          <a class="btn btn-outline-info mb-4" href="?page={{page_obj.next_page_number}}">Next</a>
+          <a class="btn btn-outline-info mb-4" href="?page={{page_obj.paginator.num_pages}}">Last</a>
+        {%endif%}
+    {%endif%}
+
+
+          
+
+{% endblock content %}

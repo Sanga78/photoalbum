@@ -1,0 +1,16 @@
+{% extends "blog/base.html" %}
+{% block content %}
+  <article class="media content-section">
+    <img class="rounded-circle article-img" src="{{ user.profile.image.url }}">
+    <div class="media-body">
+        <div class="article-metadata">
+            <h2>User: {{ user.username }}</h2>
+            <p>Has {{ user.album_set.count }} albums</p>
+        </div>
+        <h2>Albums</h2>
+        {% for album in user_albums %}
+            <p>Album: {{ album.album_title }} has {{ album.photo_set.count }} photos</p>
+        {% endfor %}
+    </div>
+  </article>
+{% endblock content %}

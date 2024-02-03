@@ -1,0 +1,13 @@
+<h1>Photo: {{ photo.photo_title }}</h1>
+<p>Image URL: {{ photo.image.url }}</p>
+
+<img class="rounded-circle article-img" src="{{ photo.image }}" />
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="title">Edit Title:</label>
+    <input type="text" id="title" name="title" value="{{ photo.photo_title }}">
+    <button type="submit">Save</button>
+</form>
+
+
+<h3> removed 'edit_photo' photo.id </h3>

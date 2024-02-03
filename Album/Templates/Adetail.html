@@ -1,0 +1,38 @@
+<!-- album_detail.html -->
+
+{% extends "blog/base.html" %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <section class="album" id="images">
+    <h2 class="heading">view your album images below</h2>
+    <h2>Album: {{ album.album_title }}</h2>
+    <h3>User: {{ album.user.username }}</h3>
+    <h2>Photos</h2>
+    <div class="box-container" id="product-list">
+      {% for photo in album_photos %}
+        <div class="box">
+          <h3>{{ photo.photo_title }}</h3>
+            <img src="{{ photo.image.url }}">
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'photo_detail' photo.id %}">Details</a>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div>
+      <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'add_photo' object.id %}">Add photos</a>
+      <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'album-update' object.id %}">Update</a>
+      <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'album-delete' object.id %}">Delete</a>
+    </div>
+  </section>
+</body>
+</html>
+{% endblock content %}
