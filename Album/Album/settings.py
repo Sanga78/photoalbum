@@ -167,4 +167,4 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 
-AUTH_USER_MODEL = 'User'
+AUTH_USER_MODEL = 'photoapp.User'
