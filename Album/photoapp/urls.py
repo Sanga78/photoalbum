@@ -1,8 +1,15 @@
 from django.urls import path
 from . import views
-urlpatterns=[
-    path('index/',views.index,name='index'),
-    path('register', views.register, name='user_register'),
-    path('',views.login_request,name='login'),
-    path('logout/',views.logout_request,name='logout')
+from .views import AlbumListView, AlbumDetailView, AlbumCreateView, AlbumUpdateView, AlbumDeleteView, AddPhotoView,UserDetailView,PhotoDetailView
+urlpatterns =[
+    path('', AlbumListView.as_view(), name='album-home'),
+    path('album/<int:pk>/', AlbumDetailView.as_view(), name='album-detail'),
+    path('user/<int:pk>/', UserDetailView.as_view(), name='user_detail'),
+    path('photo/<int:pk>/', PhotoDetailView.as_view(), name='photo_detail'),
+    path('album/new/', AlbumCreateView.as_view(), name='album-create'),
+    path('album/<int:pk>/add_photo/', AddPhotoView.as_view(), name='add_photo'),
+    path('album/<int:pk>/update/', AlbumUpdateView.as_view(), name='album-update'),
+    path('album/<int:pk>/delete/', AlbumDeleteView.as_view(), name='album-delete'),
+    path('about/', views.about, name='album-about'),
+    
 ]
