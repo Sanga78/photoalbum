@@ -18,16 +18,33 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from django.views.generic import TemplateView 
-from django.contrib.auth.views import LogoutView
+from django.contrib.auth import views as auth_views
+from photoapp import views as user_views
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("app/",include("photoapp.urls")),
-    path('', TemplateView.as_view(template_name='index.html')),
+    path('',include("photoapp.urls")),
     path('accounts/', include('allauth.urls')), # all OAuth operations will be performed under this route
-    path('logout', LogoutView.as_view()) # default Django logout view at /logout
+    path('logout', auth_views.LogoutView.as_view()), # default Django logout view at /logout
+    path('register/', user_views.register, name='register'),
+    path('login/', user_views.Login.as_view(), name='login'),
+    path('logout/', user_views.Logout.as_view(), name='logout'),
+    path('profile/', user_views.profile, name='profile'),
+    path('password-reset/', 
+         auth_views.PasswordResetView.as_view(template_name='users/password_reset.html'), 
+         name='password_reset'),
+    path('password-reset/done/', 
+         auth_views.PasswordResetDoneView.as_view(template_name='users/password_reset_done.html'), 
+         name='password_reset_done'),
+    path('password-reset-confirm', 
+         auth_views.PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'), 
+         name='password_reset_confirm'),
+    path('password-reset-complete', 
+         auth_views.PasswordResetCompleteView.as_view(template_name='users/password_reset_complete.html'), 
+         name='password_reset_complete')
+
 ]
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
-
-
