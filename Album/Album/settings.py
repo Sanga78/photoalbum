@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'photoapp',
+    'crispy_forms',
+    'crispy_bootstrap4',
     #all auth configurations
     'allauth',
     'allauth.account',
@@ -157,7 +159,6 @@ SOCIALACCOUNT_PROVIDERS = {
 SITE_ID = 2
 
 LOGIN_REDIRECT_URL = 'album-home'
-LOGIN_URL = 'login'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
