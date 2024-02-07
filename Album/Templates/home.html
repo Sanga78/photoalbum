@@ -17,7 +17,7 @@
             {%if user == album.user %} 
               <h2><a class="article-title" href="{% url 'album-detail' album.id %}">{{ album.album_title }}</a></h2>
             {%else%}
-              <h2>{{ album.album_title }}</h2>
+              <h2>{{ album.album_title }}</h2><P>photos: {{ album.photo_set.count}}</P>
             {%endif%}
             
           </div>
