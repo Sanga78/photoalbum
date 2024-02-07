@@ -10,23 +10,29 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 
 
-# Create your views here.
-class HomeView(ListView):
-    template_name = 'home.html'
-    model = User
-    context_object_name = 'users'
-
+# # Create your views here.
+# class HomeView(ListView):
+#     template_name = 'home.html'
+#     model = User
+#     context_object_name = 'users'
+#     def get_queryset(self):
+#         return User.objects.all()
+    
 def about(request):
 
     return render(request,'about.html', {'title':'about'})
 
 
-class AlbumListView(ListView):
+class HomeView(ListView):
     model = Album
     template_name = 'home.html'
     context_object_name = 'albums'
     ordering = ['-date_created']
     paginate_by = 3
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['users'] = User.objects.exclude(username='admin')  # Add any filtering or ordering if needed
+        return context
 
 class UserAlbumListView(ListView):
     model = Album
@@ -42,7 +48,7 @@ class UserAlbumListView(ListView):
 class AlbumCreateView(LoginRequiredMixin, CreateView):
     model = Album
     fields = ['album_title']
-
+    template_name = 'album_form.html'
     def form_valid(self, form):
         form.instance.user = self.request.user
 
