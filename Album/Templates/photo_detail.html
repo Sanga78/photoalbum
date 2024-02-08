@@ -1,13 +1,32 @@
-<h1>Photo: {{ photo.photo_title }}</h1>
-<p>Image URL: {{ photo.image.url }}</p>
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
 
-<img class="rounded-circle article-img" src="{{ photo.image }}" />
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <label for="title">Edit Title:</label>
-    <input type="text" id="title" name="title" value="{{ photo.photo_title }}">
-    <button type="submit">Save</button>
-</form>
-
-
-<h3> removed 'edit_photo' photo.id </h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <section class="album" id="images">
+    <h2 class="heading">view your image below</h2>
+    <h2>{{ photo.photo_title }}</h2>
+    <div class="box-container" id="product-list">
+        <div class="box">
+            <p>Image URL: {{ photo.image.url }}</p>
+            <img src="{{ photo.image.url }}">
+            <form method="post" action="{% url 'photo_detail' pk=photo.pk %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="title">Edit Title:</label>
+                <input type="text" id="title" name="photo_title" value="{{ photo.photo_title }}">
+                <button type="submit">Save</button>
+            </form> 
+        </div>  
+    </div>
+    <a href="{% url 'album-home' %}">Back to Home</a>
+  </section>
+</body>
+</html>
+{% endblock content %}
