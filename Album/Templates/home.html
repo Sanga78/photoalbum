@@ -15,9 +15,9 @@
               <small class="text-muted">{{ album.date_created|date:"F d, Y" }}</small>
             </div>
             {%if user == album.user %} 
-              <h2><a class="article-title" href="{% url 'album-detail' album.id %}">{{ album.album_title }}</a></h2>
+              <h2><a class="article-title" href="{% url 'album-detail' album.id %}">{{ album.album_title }}</a></h2><p>photos: {{ album.photo_set.count}}</p>
             {%else%}
-              <h2>{{ album.album_title }}</h2><P>photos: {{ album.photo_set.count}}</P>
+              <h2>{{ album.album_title }}</h2> <P>photos: {{ album.photo_set.count}}</P>
             {%endif%}
             
           </div>
