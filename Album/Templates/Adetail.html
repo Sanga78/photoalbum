@@ -22,7 +22,7 @@
         <div class="box">
           <h3>{{ photo.photo_title }}</h3>
             <img src="{{ photo.image.url }}">
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'photo_detail' photo.id %}">Details</a>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'photo_detail' photo.id %}">View image</a>
         </div>
         {% endfor %}
     </div>
