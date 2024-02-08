@@ -9,14 +9,6 @@ from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm,LoginForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 
-
-# # Create your views here.
-# class HomeView(ListView):
-#     template_name = 'home.html'
-#     model = User
-#     context_object_name = 'users'
-#     def get_queryset(self):
-#         return User.objects.all()
     
 def about(request):
 
@@ -65,6 +57,7 @@ class AlbumCreateView(LoginRequiredMixin, CreateView):
 
 class AlbumUpdateView(LoginRequiredMixin, UpdateView):
     model = Album
+    template_name = 'album_form.html'
     fields = ['album_title']
     
     def form_valid(self, form):
@@ -76,6 +69,8 @@ class AlbumUpdateView(LoginRequiredMixin, UpdateView):
         if self.request.user == album.user:
             return True
         return False
+    def get_success_url(self):
+        return reverse_lazy('album-detail', args=[str(self.object.id)])
             
 
 class AlbumDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
