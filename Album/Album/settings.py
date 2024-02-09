@@ -165,12 +165,10 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 EMAIL_BACKEND= 'django.core.mail.backend.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ('EMAIL_USER')
-EMAIL_HOST_PASSWORD = os.environ('EMAIL_PASS')
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_PORT = 25
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'your_gmail_account@gmail.com'
-EMAIL_HOST_PASSWORD = 'your_gmail_password'
 
 AUTH_USER_MODEL = 'photoapp.User'
