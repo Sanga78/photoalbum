@@ -9,7 +9,8 @@ from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm,LoginForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 
-    
+def index(request):
+    return render(request,'index.html') 
 def about(request):
 
     return render(request,'about.html', {'title':'about'})
@@ -32,10 +33,11 @@ class UserAlbumListView(ListView):
     context_object_name = 'albums'
     paginate_by = 3
     
+    
     def get_queryset(self):
-        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        username = self.kwargs.get('username')
+        user = get_object_or_404(User, username=username)
         return Album.objects.filter(user=user).order_by('-date_created')
-
 
 class AlbumCreateView(LoginRequiredMixin, CreateView):
     model = Album
@@ -143,7 +145,7 @@ class Login(LoginView):
     success_url = reverse_lazy('album-home')  
 
 class Logout(LogoutView):
-    template_name = 'home.html'  
+    template_name = 'index.html'  
     def get(self, request, *args, **kwargs):
         messages.success(request, 'You have been successfully logged out.')
         return super().get(request, *args, **kwargs)
