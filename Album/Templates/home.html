@@ -1,29 +1,64 @@
 {% extends "base.html" %}
 {% block content %}
+<style>
+#gallery{
+  margin-top: -1%;
+}
+.username{
+  color: #27a776;
+  text-transform: capitalize;
+}
+h3{
+  text-align: center;
+}
+article{
+  border: 1px solid #fafafa;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+@media(max-width:991px) {
+  #gallery{
+  margin-top: 15%;
+}
+}
+
+@media(max-width:768px) {
+  #gallery{
+  margin-top: 18%;
+}
+}
+
+@media(max-width: 450px) {
+  #gallery{
+  margin-top: 28%;
+}
+article{
+  padding: .5rem; 
+}
+}
+
+</style>
+<section id="hero" class="hero d-flex flex-column justify-content-center align-items-center" data-aos="fade" data-aos-delay="1500">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 text-center">
+        <h2>Welcome to<span>Photo album</span>Capture, Create, Cherish: Your Memories, Your Way.</h2>
+        <p><br>Seamlessly upload and organize your photos, design stunning albums with ease, and relive your moments anytime, anywhere. Start Building Beautiful Albums Today</p>
+        <a class="btn-get-started" href="">View Albums</a>
+      </div>
+    </div>
+  </div>
+</section><!-- End Hero Section -->
+
+<section id="gallery" class="gallery">
   <h3>Users</h3>
       {% for user in users %}
-          <p>{{ user.username }} - Albums: {{ user.album_set.count }}</p>
+          <p><span class="username">{{ user.username }}</span> , Has {{ user.album_set.count }} Albums</p>
       {% endfor %}
-
-  <h3>Albums</h3>
-    {% for album in albums %}
-        <article class="media content-section">
-          <img class="rounded-circle article-img" src="{{ album.user.profile.image.url }}">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="{%url 'user_detail' album.user.id%}">{{ album.user }}</a>
-              <small class="text-muted">{{ album.date_created|date:"F d, Y" }}</small>
-            </div>
-            {%if user == album.user %} 
-              <h2><a class="article-title" href="{% url 'album-detail' album.id %}">{{ album.album_title }}</a></h2><p>photos: {{ album.photo_set.count}}</p>
-            {%else%}
-              <h2>{{ album.album_title }}</h2> <P>photos: {{ album.photo_set.count}}</P>
-            {%endif%}
-            
-          </div>
-        </article>
-    {% endfor %}
-
+  </div>
+  </div>
+</section><!-- End Gallery Section -->
     {%if is_paginated %}
         {%if page_obj.has_previous%}
           <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
