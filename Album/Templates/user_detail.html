@@ -1,16 +1,43 @@
 {% extends "base.html" %}
 {% block content %}
+<style>
+  .content-section{
+    margin-top: 22vh;
+  }
+  span{
+    color: #27a776;
+  }a{
+    text-transform: capitalize;
+  }
+  @media(max-width: 450px) {
+  .content-section{
+  padding: 5%;
+  }
+  }
+</style>
   <article class="media content-section">
     <img class="rounded-circle article-img" src="{{ user.profile.image.url }}">
     <div class="media-body">
         <div class="article-metadata">
-            <h2>User: {{ user.username }}</h2>
+            <h2>User {{ user.username }}</h2>
             <p>Has {{ user.album_set.count }} albums</p>
         </div>
         <h2>Albums</h2>
         {% for album in user_albums %}
-            <p>Album: {{ album.album_title }} has {{ album.photo_set.count }} photos</p>
+            <p>Album: <a href="{% url 'album-detail' album.id %}">{{ album.album_title }}</a> has <span>{{ album.photo_set.count }} </span>photos</p>
         {% endfor %}
     </div>
+    {%if is_paginated %}
+    {%if page_obj.has_previous%}
+      <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+      <a class="btn btn-outline-info mb-4" href="?page={{page_obj.previous_page_number}}">Previous</a>
+    {%endif%}
+  
+    {% if page_obj.has_next%}
+      <a class="btn btn-outline-info mb-4" href="?page={{page_obj.next_page_number}}">Next</a>
+      <a class="btn btn-outline-info mb-4" href="?page={{page_obj.paginator.num_pages}}">Last</a>
+    {%endif%}
+{%endif%}
+
   </article>
 {% endblock content %}
