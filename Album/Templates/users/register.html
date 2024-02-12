@@ -1,21 +1,25 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
- <div class="content-section">
-    <form method="POST">
-        {%csrf_token%}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">JOIN TODAY</legend>
-            {{form|crispy}}
-        </fieldset>
-        <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">Sign up</button>
+<div class="login-page">
+     <div class="form" id="form">
+        <div id="create-account" class="login_container">
+            <!-- <h1>Sign Up below</h1> -->
+            <form method="post" autocomplete="off">
+                {% csrf_token %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <h2 class="error">{{message}}</h2>
+                    {% endfor %}
+                {% endif %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">SIGN UP BELOW</legend>
+                    {{form|crispy}}
+                </fieldset>
+                <button id="Register_btn" type="submit">Sign Up</button>
+                <center><a id="return_btn" href="{% url 'login' %}">Already have an account</a></center>
+            </form>
         </div>
-    </form>
-    <div class="border-top pt-3">
-        <small class="text-muted">
-            Already have an account? <a class="ml-2" href="{%url 'login'%}">Sign in</a>
-        </small>
     </div>
- </div>
+</div>   
  {%endblock content%}
