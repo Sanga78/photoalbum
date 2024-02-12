@@ -16,9 +16,10 @@ class LoginForm(AuthenticationForm):
 
 class UserUpdateForm(forms.ModelForm):
     email =forms.EmailField()
+    fullname= forms.CharField(max_length=200)
     class Meta:
         model = User
-        fields = ['username', 'email']
+        fields = ['username', 'email','fullname']
 
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
