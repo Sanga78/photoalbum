@@ -1,32 +1,73 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+<style>
+  .cta-btn{
+    border: 1px solid #27a776;
+    padding: .3rem .5rem;
+    border-radius: 3px;
+  }
+  button{
+    border: none;
+    border-radius: 6px;
+    padding: .2rem .6rem;
+    color: #fff;
+    background-color: #27a776;
+  }
+  input{
+    margin-left: 10px;
+    border-radius: 5px;
+    border: none;
+    padding: 3px 5px;
+  }
+</style>
+<main id="main" data-aos="fade" data-aos-delay="1500">
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-  <section class="album" id="images">
-    <h2 class="heading">view your image below</h2>
-    <h2>{{ photo.photo_title }}</h2>
-    <div class="box-container" id="product-list">
-        <div class="box">
-            <p>Image URL: {{ photo.image.url }}</p>
-            <img src="{{ photo.image.url }}">
-            <form method="post" action="{% url 'photo_detail' pk=photo.pk %}" enctype="multipart/form-data">
-                {% csrf_token %}
-                <label for="title">Edit Title:</label>
-                <input type="text" id="title" name="photo_title" value="{{ photo.photo_title }}">
-                <button type="submit">Save</button>
-            </form> 
-        </div>  
+  <!-- ======= End Page Header ======= -->
+  <div class="page-header d-flex align-items-center">
+    <div class="container position-relative">
+      <div class="row d-flex justify-content-center">
+        <div class="col-lg-6 text-center">
+          <h3>View and edit your image below</h3>
+          <h3 class="cta-btn" >{{ photo.photo_title }}</h3>
+        </div>
+      </div>
     </div>
-    <a href="{% url 'album-home' %}">Back to Home</a>
-  </section>
-</body>
-</html>
+  </div><!-- End Page Header -->
+
+  <!-- ======= Gallery Single Section ======= -->
+  <section id="gallery-single" class="gallery-single">
+    <div class="container">
+
+      <div class="position-relative h-100">
+        <div class="slides-1 portfolio-details-slider swiper">
+          <div class="swiper-wrapper align-items-center">
+
+            <div class="swiper-slide">
+              <img src="{{ photo.image.url }}" alt="{{ photo.photo_title }}">
+            </div>
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+
+      </div>
+
+      <div class="row justify-content-between gy-4 mt-4">  
+        <form method="post" action="{% url 'photo_detail' pk=photo.pk %}" enctype="multipart/form-data">
+          {% csrf_token %}
+          <label for="title">Edit Title:</label>
+          <input type="text" id="title" name="photo_title" value="{{ photo.photo_title }}">
+          <button type="submit">Save</button>
+      </form> 
+        
+
+      </div>
+      <br><a class="cta-btn" href="{%url 'user_albums' user.username %}">Back</a>
+    </div>
+  </section><!-- End Gallery Single Section -->
+
+</main><!-- End #main -->
 {% endblock content %}
