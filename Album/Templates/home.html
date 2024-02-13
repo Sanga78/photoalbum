@@ -2,7 +2,7 @@
 {% block content %}
 <style>
 #gallery{
-  margin-top: -1%;
+  margin-top: 1%;
 }
 .username{
   color: #27a776;
@@ -30,8 +30,14 @@ article{
 }
 
 @media(max-width: 450px) {
+  .text-center h2{
+    font-size: 1.2rem;
+  }
+  .text-center p{
+    font-size: 1rem;
+  }
   #gallery{
-  margin-top: 28%;
+  margin-top: 1%;
 }
 article{
   padding: .5rem; 
@@ -43,9 +49,9 @@ article{
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-6 text-center">
-        <h2>Welcome to<span>Photo album</span>Capture, Create, Cherish: Your Memories, Your Way.</h2>
+        <h2>Welcome to<span>Photo album</span>Capture, Create And Cherish Your Memories.</h2>
         <p><br>Seamlessly upload and organize your photos, design stunning albums with ease, and relive your moments anytime, anywhere. Start Building Beautiful Albums Today</p>
-        <a class="btn-get-started" href="">View Albums</a>
+        <a class="btn-get-started" href="{%url 'user_albums' user.username %}">View Albums</a>
       </div>
     </div>
   </div>
@@ -72,6 +78,9 @@ article{
     {%endif%}
 
 
-          
+
+    <div id="preloader">
+      <div class="line"></div>
+    </div>          
 
 {% endblock content %}
