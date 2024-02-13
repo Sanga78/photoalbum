@@ -45,7 +45,7 @@
         <ul>
           {%if user.is_authenticated%}
           <li><a href="{%url 'album-home' %}" class="active">Home</a></li>
-          <li><a href="{%url 'user_detail' user.id%}">About</a></li>
+          <li><a href="{%url 'user_detail' user.id%}">User</a></li>
           <li><a href="{%url 'user_albums' user.username %}">Albums</a></li>
           <li><a href="">Contact</a></li>
           
@@ -81,9 +81,9 @@
 
   <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  <div id="preloader">
+  <!-- <div id="preloader">
     <div class="line"></div>
-  </div>
+  </div> -->
 
   <!-- Vendor JS Files -->
   <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
