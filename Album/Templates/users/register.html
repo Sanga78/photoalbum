@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
 {% block content %}
 <div class="login-page">
      <div class="form" id="form">
@@ -14,7 +13,11 @@
                 {% endif %}
                 <fieldset class="form-group">
                     <legend class="border-bottom mb-4">SIGN UP BELOW</legend>
-                    {{form|crispy}}
+                    <input id="email_signUp" name="email" type="email" placeholder="Email" required>
+					<input id="name" name="fullname" type="text" placeholder="Full Name" required>
+					<input id="username" name="username" type="text" placeholder="Username" required>
+					<input id="password1" name="password1" type="password" placeholder="Password" required>
+					<input id="password2" name="password2" type="password" placeholder="Confirm Password" required>
                 </fieldset>
                 <button id="Register_btn" type="submit">Sign Up</button>
                 <center><a id="return_btn" href="{% url 'login' %}">Already have an account</a></center>
