@@ -8,6 +8,7 @@ from django.views.generic.edit import FormView
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm,LoginForm,PhotoForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth import logout
 
 def index(request):
     return render(request,'index.html') 
@@ -59,7 +60,7 @@ class AlbumCreateView(LoginRequiredMixin, CreateView):
 
 class AlbumUpdateView(LoginRequiredMixin, UpdateView):
     model = Album
-    template_name = 'album_form.html'
+    template_name = 'album_update.html'
     fields = ['album_title']
     
     def form_valid(self, form):
@@ -94,10 +95,25 @@ class AlbumDetailView(DetailView):
         context['album_photos'] = Photo.objects.filter(album_id=self.object)
         return context
 
+
 class PhotoDetailView(DetailView):
-    template_name = 'photo_detail.html'
     model = Photo
+    template_name = 'photo_detail.html'
     context_object_name = 'photo'
+
+    def post(self, request, *args, **kwargs):
+        instance = self.get_object()
+        form = PhotoForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('photo_detail', pk=instance.pk)
+        else:
+            return self.get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = PhotoForm(instance=self.get_object())
+        return context    
     
 
 class AddPhotoView(FormView):
@@ -144,12 +160,15 @@ class Login(LoginView):
     form_class = LoginForm
     success_url = reverse_lazy('album-home')  
 
-class Logout(LogoutView):
-    template_name = 'index.html'  
-    def get(self, request, *args, **kwargs):
-        messages.success(request, 'You have been successfully logged out.')
-        return super().get(request, *args, **kwargs)
-
+# class Logout(LogoutView):
+#     template_name = 'index.html'  
+#     def get(self, request, *args, **kwargs):
+#         messages.success(request, 'You have been successfully logged out.')
+#         return super().get(request, *args, **kwargs)
+def logout_request(request):
+    logout(request)
+    messages.info(request,"Logged out successfully!")
+    return redirect('/')
 @login_required
 def profile(request):
     if request.method == 'POST':
