@@ -26,11 +26,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include("photoapp.urls")),
     path('accounts/', include('allauth.urls')), # all OAuth operations will be performed under this route
-    # path('logout', auth_views.LogoutView.as_view()), # default Django logout view at /logout
     path('register/', user_views.register, name='register'),
     path('logout/',user_views.logout_request,name='logout'),
     path('login/', user_views.Login.as_view(), name='login'),
-    # path('logout/', user_views.Logout.as_view(), name='logout'),
     path('profile/', user_views.profile, name='profile'),
     path('password-reset/', 
         auth_views.PasswordResetView.as_view(
