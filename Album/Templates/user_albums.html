@@ -3,6 +3,13 @@
 <style>
   .gallery{
     margin-top: 18vh;
+    max-width: 50vw;
+  }
+  .media-body{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1px solid #fafafa;
   }
   .date{
   color: gold;
@@ -17,19 +24,43 @@
   span:hover{
     color: #fafafa;
   }
+  .create{
+    font-size: 1rem;
+    border: 0;
+    text-decoration: none;
+    background-color: #27a776;
+    color: #fafafa;
+    padding: .3rem;
+    border-radius: 3px;
+  }
+  .create:hover{
+    background: none;
+    border: 1px solid #27a776;
+    color: #27a776;
+    font-size: 1.1rem;
+  }
+  .btn-get-started{
+    border: 1px solid #27a776;
+    padding: .2rem .5rem;
+    border-radius: 4px;
+  }
+  .btn-get-started:hover{
+    border: 0;
+    background-color: #27a776;
+    padding: .2rem .5rem;
+    border-radius: 4px;
+    color: #161718;
+    font-weight: 600;
+    font-size: 14px;
+  }
   @media(max-width: 450px) {
   .gallery{
+  max-width: 100%;
   padding: 7%;
   font-size: 80%;
   }
   .date:hover{
     font-size: 100%;
-  }
-  .create{
-    border: 0;
-    text-decoration: none;
-    background-color: #27a776;
-    color: #fafafa;
   }
 }
 
@@ -46,11 +77,16 @@
           <div class="media-body">
             <div class="article-metadata">
              <h2><a class="mr-2" href="{% url 'album-detail' album.id %}">{{ album.album_title }}</a></h2> 
-              <span class="date">created on </span><small>{{ album.date_created|date:"F d, Y" }}</small>
+              <p><span class="date">created on </span><small >{{ album.date_created|date:"F d, Y" }}</small></p>
+              <p>Has {{ album.photo_set.count }} photos</p>
+            </div>
+            <div class="view">
+              <a class="btn-get-started" href="{% url 'album-detail' album.id %}">View</a>
             </div>
           </div>
           {% endfor %}
         </article>
+        <br>
     {%if is_paginated %}
         {%if page_obj.has_previous%}
           <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
