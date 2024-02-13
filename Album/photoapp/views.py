@@ -160,11 +160,7 @@ class Login(LoginView):
     form_class = LoginForm
     success_url = reverse_lazy('album-home')  
 
-# class Logout(LogoutView):
-#     template_name = 'index.html'  
-#     def get(self, request, *args, **kwargs):
-#         messages.success(request, 'You have been successfully logged out.')
-#         return super().get(request, *args, **kwargs)
+
 def logout_request(request):
     logout(request)
     messages.info(request,"Logged out successfully!")
