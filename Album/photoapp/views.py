@@ -1,6 +1,6 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from django.contrib import messages
-from .models import Album,Photo,User
+from .models import Album,Photo,User,Profile
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse,reverse_lazy
@@ -166,26 +166,47 @@ def logout_request(request):
     messages.info(request,"Logged out successfully!")
     return redirect('/')
 @login_required
+# def profile(request):
+#     if request.method == 'POST':
+#         u_form= UserUpdateForm(request.POST, instance=request.user)
+#         p_form= ProfileUpdateForm(request.POST, 
+#                                   request.FILES, 
+#                                   instance=request.user.profile)
+
+#         if u_form.is_valid() and p_form.is_valid():
+#             u_form.save()
+#             p_form.save()
+#             messages.success(request, f'You Account has been Updated')
+#             return redirect('profile')
+#     else:
+#         u_form= UserUpdateForm(instance=request.user)
+#         p_form= ProfileUpdateForm(instance=request.user.profile)
+
+#     context = {
+#         'u_form':u_form,
+#         'p_form':p_form
+#     }
+
+#     return render(request, 'users/profile.html', context)
+ 
 def profile(request):
+    user_profile = Profile.objects.get_or_create(user=request.user)[0]
+
     if request.method == 'POST':
         u_form= UserUpdateForm(request.POST, instance=request.user)
-        p_form= ProfileUpdateForm(request.POST, 
-                                  request.FILES, 
-                                  instance=request.user.profile)
-
-        if u_form.is_valid() and p_form.is_valid():
-            u_form.save()
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=user_profile)
+        if p_form.is_valid() and u_form.is_valid():
             p_form.save()
+            u_form.save()
             messages.success(request, f'You Account has been Updated')
             return redirect('profile')
     else:
+        p_form = ProfileUpdateForm(instance=user_profile)
         u_form= UserUpdateForm(instance=request.user)
-        p_form= ProfileUpdateForm(instance=request.user.profile)
+
 
     context = {
         'u_form':u_form,
         'p_form':p_form
     }
-
     return render(request, 'users/profile.html', context)
- 
