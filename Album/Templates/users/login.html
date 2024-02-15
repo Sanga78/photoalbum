@@ -10,6 +10,9 @@
         text-decoration: none;
         color: #fafafa;
     }
+    button a:hover{
+        color: #fafafa;
+    }
 </style>
 <div class="login-page">
      <div class="form" id="form">
@@ -17,11 +20,7 @@
             <!-- <h1>Sign Up below</h1> -->
             <form method="post" autocomplete="off">
                 {% csrf_token %}
-                {% if messages %}
-                    {% for message in messages %}
-                        <h2 class="error">{{message}}</h2>
-                    {% endfor %}
-                {% endif %}
+              
                 <fieldset class="form-group">
                     <legend class="border-bottom mb-4">Log in</legend>
                     {{form|crispy}}
