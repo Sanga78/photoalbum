@@ -27,7 +27,8 @@ urlpatterns = [
     path('',include("photoapp.urls")),
     path('accounts/', include('allauth.urls')), # all OAuth operations will be performed under this route
     path('register/', user_views.register, name='register'),
-    path('logout/',user_views.logout_request,name='logout'),
+    # path('logout/',user_views.logout_request,name='logout'),
+     path('logout', auth_views.LogoutView.as_view()) ,
     path('login/', user_views.Login.as_view(), name='login'),
     path('profile/', user_views.profile, name='profile'),
     path('password-reset/', 
@@ -40,7 +41,7 @@ urlpatterns = [
     path('password-reset/done/', 
          auth_views.PasswordResetDoneView.as_view(template_name='users/password_reset_done.html'), 
          name='password_reset_done'),
-    path('password-reset-confirm/<uid64>/<token>/', 
+    path('password-reset-confirm/<uidb64>/<token>/', 
          auth_views.PasswordResetConfirmView.as_view(template_name='users/password_reset_confirm.html'), 
          name='password_reset_confirm'),
     path('password-reset-complete/', 
