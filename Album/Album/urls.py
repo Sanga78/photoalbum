@@ -27,8 +27,7 @@ urlpatterns = [
     path('',include("photoapp.urls")),
     path('accounts/', include('allauth.urls')), # all OAuth operations will be performed under this route
     path('register/', user_views.register, name='register'),
-    # path('logout/',user_views.logout_request,name='logout'),
-     path('logout', auth_views.LogoutView.as_view()) ,
+    path('logout/',user_views.logout_request,name='logout'),
     path('login/', user_views.Login.as_view(), name='login'),
     path('profile/', user_views.profile, name='profile'),
     path('password-reset/', 
